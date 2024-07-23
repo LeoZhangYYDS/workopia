@@ -1,0 +1,3 @@
+<?=  
+
+loadView('error/404');
