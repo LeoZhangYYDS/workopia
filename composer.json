@@ -1,0 +1,16 @@
+{
+  "name": "leozhangyyds/workopia",
+  "description": "Job listing application",
+  "authors": [
+    {
+      "name": "Leo Zhang",
+      "email": "developerleo321@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}
