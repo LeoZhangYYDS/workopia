@@ -29,7 +29,7 @@
                 </li>
                 <li class="mb-2">
                   <strong>Tags:</strong> <span><?= $listing['tags'] ?></span>,
-                  <span>Coding</span>
+                  <span>coding</span>
                 </li>
               </ul>
               <a href="/listings/<?= $listing['id'] ?>"
