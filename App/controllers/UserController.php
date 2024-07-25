@@ -122,83 +122,83 @@ class UserController
     redirect('/');
   }
 
-//   /**
-//    * Logout a user and kill session
-//    * 
-//    * @return void
-//    */
-//   public function logout()
-//   {
-//     Session::clearAll();
+  /**
+   * Logout a user and kill session
+   * 
+   * @return void
+   */
+  public function logout()
+  {
+    Session::clearAll();
 
-//     $params = session_get_cookie_params();
-//     setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+    $params = session_get_cookie_params();
+    setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
 
-//     redirect('/');
-//   }
+    redirect('/');
+  }
 
-//   /**
-//    * Authenticate a user with email and password
-//    * 
-//    * @return void
-//    */
-//   public function authenticate()
-//   {
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
+  /**
+   * Authenticate a user with email and password
+   * 
+   * @return void
+   */
+  public function authenticate()
+  {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-//     $errors = [];
+    $errors = [];
 
-//     // Validation
-//     if (!Validation::email($email)) {
-//       $errors['email'] = 'Please enter a valid email';
-//     }
+    // Validation
+    if (!Validation::email($email)) {
+      $errors['email'] = 'Please enter a valid email';
+    }
 
-//     if (!Validation::string($password, 6, 50)) {
-//       $errors['password'] = 'Password must be at least 6 characters';
-//     }
+    if (!Validation::string($password, 6, 50)) {
+      $errors['password'] = 'Password must be at least 6 characters';
+    }
 
-//     // Check for errors
-//     if (!empty($errors)) {
-//       loadView('users/login', [
-//         'errors' => $errors
-//       ]);
-//       exit;
-//     }
+    // Check for errors
+    if (!empty($errors)) {
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit;
+    }
 
-//     // Check for email
-//     $params = [
-//       'email' => $email
-//     ];
+    // Check for email
+    $params = [
+      'email' => $email
+    ];
 
-//     $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
+    $user = $this->db->query('SELECT * FROM users WHERE email = :email', $params)->fetch();
 
-//     if (!$user) {
-//       $errors['email'] = 'Incorrect credentials';
-//       loadView('users/login', [
-//         'errors' => $errors
-//       ]);
-//       exit;
-//     }
+    if (!$user) {
+      $errors['email'] = 'Incorrect credentials';
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit;
+    }
 
-//     // Check if password is correct
-//     if (!password_verify($password, $user->password)) {
-//       $errors['email'] = 'Incorrect credentials';
-//       loadView('users/login', [
-//         'errors' => $errors
-//       ]);
-//       exit;
-//     }
+    // Check if password is correct
+    if (!password_verify($password, $user['password'])) {
+      $errors['email'] = 'Incorrect credentials';
+      loadView('users/login', [
+        'errors' => $errors
+      ]);
+      exit;
+    }
 
-//     // Set user session
-//     Session::set('user', [
-//       'id' => $user->id,
-//       'name' => $user->name,
-//       'email' => $user->email,
-//       'city' => $user->city,
-//       'state' => $user->state
-//     ]);
+    // Set user session
+    Session::set('user', [
+      'id' => $user['id'],
+      'name' => $user['name'],
+      'email' => $user['email'],
+      'city' => $user['city'],
+      'state' => $user['state']
+    ]);
 
-//     redirect('/');
-//   }
+    redirect('/');
+  }
 }
