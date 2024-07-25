@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use Framework\Database;
+use Framework\Session;
 use Framework\Validation;
+use Framework\Authorization;
 
 class ListingController {
 
@@ -58,9 +60,8 @@ class ListingController {
   
       $newListingData = array_intersect_key($_POST, array_flip($allowedFields));
   
-      // $newListingData['user_id'] = Session::get('user')['id'];
-      $newListingData['user_id'] = 1;
-  
+      $newListingData['user_id'] = Session::get('user')['id'];
+    
       $newListingData = array_map('sanitize', $newListingData);
   
       $requiredFields = ['title', 'description', 'salary', 'email', 'city', 'state'];
@@ -132,11 +133,11 @@ class ListingController {
       return;
     }
 
-    // // Authorization
-    // if (!Authorization::isOwner($listing->user_id)) {
-    //   Session::setFlashMessage('error_message', 'You are not authoirzed to delete this listing');
-    //   return redirect('/listings/' . $listing->id);
-    // }
+    // Authorization
+    if (!Authorization::isOwner($listing['user_id'])) {
+     $_SESSION['error_message']='You are not authoirzed to delete this listing';
+      return redirect('/listings/' . $listing['id']);
+    }
 
     $this->db->query('DELETE FROM listings WHERE id = :id', $params);
 
