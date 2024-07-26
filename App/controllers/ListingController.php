@@ -24,7 +24,7 @@ class ListingController {
     {
       $listings = $this->db->query('SELECT * FROM listings ORDER BY created_at DESC')->fetchAll();
   
-      loadView('Listings/index', [
+      loadView('listings/index', [
         'listings' => $listings
       ]);
     }
