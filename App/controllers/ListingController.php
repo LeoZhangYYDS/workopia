@@ -106,7 +106,7 @@ class ListingController {
   
         $this->db->query($query, $newListingData);
   
-        // Session::setFlashMessage('success_message', 'Listing created successfully');
+        Session::setFlashMessage('success_message', 'Listing created successfully');
   
         redirect('/listings');
       }
@@ -135,14 +135,14 @@ class ListingController {
 
     // Authorization
     if (!Authorization::isOwner($listing['user_id'])) {
-     $_SESSION['error_message']='You are not authoirzed to delete this listing';
+      Session::setFlashMessage('error_message', 'You are not authoirzed to delete this listing');
       return redirect('/listings/' . $listing['id']);
     }
 
     $this->db->query('DELETE FROM listings WHERE id = :id', $params);
 
     // Set flash message
-    $_SESSION['success_message'] = 'Listing deleted successfully';
+    Session::setFlashMessage('success_message', 'Listing deleted successfully');
 
     redirect('/listings');
   }
@@ -166,11 +166,11 @@ class ListingController {
       return;
     }
 
-    // // Authorization
-    // if (!Authorization::isOwner($listing->user_id)) {
-    //   Session::setFlashMessage('error_message', 'You are not authoirzed to update this listing');
-    //   return redirect('/listings/' . $listing->id);
-    // }
+    // Authorization
+    if (!Authorization::isOwner($listing['user_id'])) {
+      Session::setFlashMessage('error_message', 'You are not authoirzed to update this listing');
+      return redirect('/listings/' . $listing['id']);
+      }
 
 
     loadView('listings/edit', [
@@ -198,11 +198,11 @@ class ListingController {
       return;
     }
 
-    // // Authorization
-    // if (!Authorization::isOwner($listing->user_id)) {
-    //   Session::setFlashMessage('error_message', 'You are not authoirzed to update this listing');
-    //   return redirect('/listings/' . $listing->id);
-    // }
+    // Authorization
+    if (!Authorization::isOwner($listing['user_id'])) {
+    Session::setFlashMessage('error_message', 'You are not authoirzed to update this listing');
+    return redirect('/listings/' . $listing['id']);
+    }
 
     $allowedFields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'state', 'phone', 'email', 'requirements', 'benefits'];
 
@@ -244,7 +244,7 @@ class ListingController {
       $this->db->query($updateQuery, $updateValues);
 
       // Set flash message
-      $_SESSION['success_message']='Listing updated';
+      Session::setFlashMessage('success_message','Listing updated');
 
       redirect('/listings/' . $id);
     }

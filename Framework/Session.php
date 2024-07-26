@@ -82,10 +82,10 @@ class Session
    * @param string $message
    * @return void
    */
-//   public static function setFlashMessage($key, $message)
-//   {
-//     self::set('flash_' . $key, $message);
-//   }
+  public static function setFlashMessage($key, $message)
+  {
+    self::set('flash_' . $key, $message);
+  }
 
   /**
    * Get a flash message and unset
@@ -94,10 +94,10 @@ class Session
    * @param mixed $default
    * @return string
    */
-//   public static function getFlashMessage($key, $default = null)
-//   {
-//     $message = self::get('flash_' . $key, $default);
-//     self::clear('flash_' . $key);
-//     return $message;
-//   }
+  public static function getFlashMessage($key, $default = null)
+  {
+    $message = self::get('flash_' . $key, $default);
+    self::clear('flash_' . $key);
+    return $message;
+  }
 }
